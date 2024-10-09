@@ -1,53 +1,25 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import FilterHeader from "./FilterHeader";
 
 export default function Header() {
-  const [activeFilter, setActiveFilter] = useState("best");
-
-  const filters = [
-    {
-      id: "trending",
-      label: "Trending",
-      icon: <Image src="/icons/fire.png" width={20} height={20} />,
-    },
-    {
-      id: "best",
-      label: "Best",
-      icon: <Image src="/icons/trophy.png" width={20} height={20} />,
-    },
-    {
-      id: "new",
-      label: "New Release",
-      icon: <Image src="/icons/stars.png" width={20} height={20} />,
-    },
-  ];
-
   return (
     <header className="flex py-[18px] items-center justify-between bg-[#040404]">
-      <h1 className="text-[28px]">Choose a Template</h1>
-      <div className="flex items-center space-x-4">
-        <span className="text-gray-400 text-sm font-medium">SORT BY</span>
-        <div className="flex space-x-2">
-          {filters.map((filter) => (
-            <button
-              key={filter.id}
-              onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-lg flex gap-2 text-[16px] font-medium transition-colors duration-200 border hover:border-white bg-black text-white ${
-                activeFilter === filter.id ? "border-white" : "border-[#2d2d2d]"
-              }`}
-            >
-              {filter.label}{" "}
-              <span
-                className={`
-                ${filter.label === "Best" ? "mt-[4px]" : ""}
-              `}
-              >
-                {filter.icon}
-              </span>
-            </button>
-          ))}
-        </div>
+      <FilterHeader small={false} />
+
+      <div className="block h-[40px] bg-[#040404]"></div>
+      <div className="lg:hidden fixed top-0 left-0 flex items-center justify-between w-full bg-[#040404] px-[20px] z-[50] py-[7px]">
+        <div></div>
+        <Link href="/" className="flex items-center p-4">
+          <Image
+            src="/logo.png"
+            alt="Logo"
+            width={110}
+            height={54}
+            className="w-[90px]"
+          />
+        </Link>
         <div className="min-w-[45px] min-h-[45px] rounded-full bg-[#021c6e] flex items-center justify-center">
           <Image
             src="/profile.png"

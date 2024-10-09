@@ -2,89 +2,58 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FiGrid,
-  FiShoppingBag,
-  FiMessageCircle,
-  FiUsers,
-  FiStar,
-  FiShare2,
-  FiFolder,
-} from "react-icons/fi";
-import { IoIosArrowDown } from "react-icons/io";
+import { FiMenu } from "react-icons/fi";
+import { IoIosArrowDown, IoMdClose } from "react-icons/io";
 
 export default function Sidebar() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const sidebarRef = useRef(null);
-
-  const checkWidth = () => {
-    if (window.innerWidth >= 1024) {
-      setIsExpanded(true);
-    } else {
-      setIsExpanded(false);
-    }
-  };
-
-  const handleClickOutside = (event) => {
-    if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-      if (window.innerWidth < 1024) {
-        setIsExpanded(false);
-      }
-    }
-  };
-
-  useEffect(() => {
-    // Check width on mount
-    checkWidth();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", checkWidth);
-
-    // Add event listener for clicks outside the sidebar
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean up
-    return () => {
-      window.removeEventListener("resize", checkWidth);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
-    setIsExpanded(!isExpanded);
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <>
+      {/* Burger Icon for large screens */}
       <div
-        className={`h-full flex sidebar-behind top-0 left-0 ${
-          isExpanded ? "xl:w-[272px] lg:w-[240px] w-[70px]" : "min-w-[70px]"
+        className={`lg:hidden fixed top-4 left-4 z-[70] ${
+          isSidebarOpen ? "hidden" : ""
         }`}
-      ></div>
-      <aside
-        className={`fixed top-0 left-0 overflow-y-auto bg-[#040404] py-[8px] h-screen transition-all duration-200 overflow-hidden overflow-y-auto ${
-          isExpanded
-            ? "xl:w-[272px] lg:w-[240px] w-[220px] px-[12px]"
-            : "px-[8px] w-[70px]"
-        } flex flex-col items-start z-[60]`}
       >
-        <Link href="/" className="flex items-center p-4">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            width={110}
-            height={54}
-            className="mr-3"
-          />
-        </Link>
+        <button onClick={toggleSidebar} className="text-white p-2">
+          <FiMenu size={24} />
+        </button>
+      </div>
+
+      <div className="h-full lg:flex hidden sidebar-behind top-0 left-0 xl:w-[272px] lg:w-[240px]"></div>
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 overflow-y-auto bg-[#040404] py-[8px] h-screen transition-transform duration-300 z-[60] transform lg:px-[10px] ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0 lg:w-[240px] w-[220px] flex flex-col items-start`}
+      >
+        <div className="flex w-full justify-between items-center">
+          <Link href="/" className="flex items-center p-4">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={110}
+              height={54}
+              className="lg:w-[110px] w-[80px]"
+            />
+          </Link>
+          <button onClick={toggleSidebar} className="text-white p-2">
+            <IoMdClose size={24} />
+          </button>
+        </div>
         <nav className="p-2 py-4 w-full space-y-1">
-          <button className="flex itmes-center justify-between w-full mb-6 bg-[#121212] py-2 ps-3 pe-4 rounded-lg">
-            <div className="flex items-center gap-3 font-semibold text-[14px]">
-              <span className="">
+          <button className="flex items-center justify-between w-full mb-6 bg-[#121212] py-2 ps-3 pe-4 rounded-lg">
+            <div className="flex items-center lg:gap-3 gap-2 font-semibold text-[14px]">
+              <span>
                 <Image
                   src="/icons/spinner.png"
                   alt="spinner"
-                  className="rounded-full"
+                  className="rounded-full lg:w-[38px] w-[30px] lg:h-[38px]"
                   width={38}
                   height={38}
                 />
@@ -159,11 +128,7 @@ export default function Sidebar() {
             text="Affiliate"
           />
         </div>
-        <div
-          className={`${
-            isExpanded ? "block" : "hidden"
-          } p-2 pt-4 text-[14px] w-full`}
-        >
+        <div className="p-2 pt-4 text-[14px] w-full">
           <Link href="#" className="block text-[#8c8c8c] hover:underline">
             Company <span className="text-[#4a4a4a]">&</span> Careers
           </Link>
@@ -173,6 +138,14 @@ export default function Sidebar() {
           <span className="block text-[#5b5b5b]">© 2024 Elira</span>
         </div>
       </aside>
+
+      {/* Overlay to close the sidebar on mobile */}
+      {isSidebarOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black opacity-50 z-[50]"
+          onClick={toggleSidebar}
+        ></div>
+      )}
     </>
   );
 }
@@ -191,7 +164,6 @@ function SidebarItem({ link, icon, text, active = false, badge = null }) {
     >
       <span className="flex items-center gap-[10px]">
         <span>{icon}</span>
-
         {text}
       </span>
       {badge && (
