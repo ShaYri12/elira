@@ -42,7 +42,10 @@ export default function Sidebar() {
               className="lg:w-[110px] w-[80px]"
             />
           </Link>
-          <button onClick={toggleSidebar} className="text-white p-2">
+          <button
+            onClick={toggleSidebar}
+            className="text-white p-2 lg:hidden flex"
+          >
             <IoMdClose size={24} />
           </button>
         </div>
