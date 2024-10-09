@@ -25,12 +25,12 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <div className="h-full lg:flex hidden sidebar-behind top-0 left-0 xl:w-[272px] lg:w-[240px]"></div>
+      <div className="h-full lg:flex hidden sidebar-behind top-0 left-0 xl:w-[272px] lg:w-[240px] transition-transform duration-300"></div>
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 overflow-y-auto bg-[#040404] py-[8px] h-screen transition-transform duration-300 z-[60] transform lg:px-[10px] ${
+        className={`fixed top-0 left-0 overflow-y-auto bg-[#040404] py-[8px] custom-scrollbar h-screen transition-transform duration-300 z-[60] transform lg:px-[10px] ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:w-[240px] w-[220px] flex flex-col items-start`}
+        } lg:translate-x-0 xl:w-[272px] lg:w-[240px] w-[220px] flex flex-col items-start`}
       >
         <div className="flex w-full justify-between items-center">
           <Link href="/" className="flex items-center p-4">
@@ -100,7 +100,7 @@ export default function Sidebar() {
             text="My Projects"
           />
         </nav>
-        <div className="p-2 py-4 mt-2 border-y border-gray-800 w-full space-y-1">
+        <div className="p-2 py-4 mt-2 border-y-[1.5px] border-[#2d2d2d] w-full space-y-1">
           <SidebarItem
             link="#"
             icon={
@@ -165,7 +165,7 @@ function SidebarItem({ link, icon, text, active = false, badge = null }) {
           : "text-[#8c8c8c]"
       } hover:text-white`}
     >
-      <span className="flex items-center gap-[10px]">
+      <span className="flex items-center gap-[10px] xl:text-[16px] text-[14px]">
         <span>{icon}</span>
         {text}
       </span>

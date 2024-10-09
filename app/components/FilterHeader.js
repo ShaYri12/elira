@@ -24,19 +24,19 @@ const FilterHeader = ({ small = false }) => {
   ];
   return (
     <div
-      className={`w-full ${
+      className={`w-full items-center ${
         small
-          ? "lg:hidden flex flex-col items-center justify-center gap-[20px] pb-[30px]"
+          ? "lg:hidden flex flex-col justify-center gap-[20px] pb-[30px]"
           : "lg:flex hidden justify-between"
       }`}
     >
-      <h1 className="text-[28px]">Choose a Template</h1>
+      <h1 className="text-[25px] font-[400]">Choose a Template</h1>
       <div
         className={`flex items-center gap-4 ${
           small && "flex-col justify-center"
         }`}
       >
-        <span className="text-gray-400 text-sm font-medium">SORT BY</span>
+        <span className="text-[#2d2d2d] text-sm font-medium">SORT BY</span>
         <div
           className={`flex gap-2 ${
             small && "flex-wrap justify-center items-center"
@@ -46,8 +46,8 @@ const FilterHeader = ({ small = false }) => {
             <button
               key={filter.id}
               onClick={() => setActiveFilter(filter.id)}
-              className={`px-4 py-2 rounded-lg flex gap-2 text-[16px] font-medium transition-colors duration-200 border-[1.6px] hover:border-white bg-black text-white ${
-                activeFilter === filter.id ? "border-white" : "border-[#2d2d2d]"
+              className={`px-4 py-2 rounded-lg flex gap-2 text-[16px] font-medium transition-colors duration-200 border-[1.4px] hover:border-white bg-black text-white border-white ${
+                activeFilter === filter.id ? "opacity-1" : "opacity-[0.1]"
               }`}
             >
               {filter.label}{" "}
